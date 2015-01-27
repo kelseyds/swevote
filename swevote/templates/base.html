@@ -1,0 +1,83 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% block head %}
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+    <title>{% block title %}User test{% endblock %}</title>
+    {% endblock %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}style.css" />
+    
+</head>
+
+<body>
+    {% block body %}
+    <div id="header">
+        {% block header %}
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <ul class="nav navbar-nav nav-pills"> 
+                    {% if user.is_authenticated %}
+                        <p class="navbar-text">{% trans "Logged in" %} as {{ user.username }} </p>
+                            <li role="presentation">
+                                <a href="{% url 'swevoteapp:index' %}">Home</a> 
+                            </li>
+                            <li role="presentation">
+                                <a href="{% url 'swevoteapp:detail' %}">Vote</a> 
+                            </li>
+                            <li role="presentation">
+                                <a href="{% url 'auth_logout' %}">Log Out</a></li>
+                            <li role="presentation">
+                                <a href="{% url 'auth_password_change' %}">Change Password</a>
+                            </li>
+                    {% else %}
+                        <li role="presentation">
+                            <a href="{% url 'swevoteapp:index' %}">Home</a> 
+                        </li>
+                        <li role="presentation">
+                            <a href="{% url 'auth_login' %}">Log in</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="{% url 'registration_register' %}">Register</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+        <script>
+            var url = window.location;
+            // Will only work if string in href matches with location
+            $('ul.nav a[href="' + url + '"]').parent().addClass('active');
+            // Will also work for relative and absolute hrefs
+            $('ul.nav a').filter(function() {
+                return this.href == url;
+            }).parent().addClass('active');
+         </script>
+        {% endblock %}
+    </div>
+
+    <div id="content">
+    {% block content %}
+    
+    {% endblock %}
+    </div>
+
+    <div id="footer">
+    {% block footer %}
+    {% endblock %}
+    </div>
+    {% endblock %}
+</body>
+
+</html>
