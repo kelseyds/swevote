@@ -1,1 +1,4 @@
 swevote/db.sqlite3
+*.pyc
+*.swp
+local_settings.py
